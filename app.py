@@ -70,7 +70,8 @@ with right:
     st.caption('Order amounts come from Python calculations, not the language model.')
 
 st.subheader('AI explanation')
-st.caption('The model receives exact features, invoice aggregates, selected product descriptions, and source references.')
+st.caption('The local model receives all-history features, up to ten recent invoice examples, selected product descriptions, and source references. Full invoice evidence remains below.')
+st.caption('All explanations refer to the selected historical analysis date, not today. Values and source references are attached by Python.')
 correction=st.text_area('What should the explanation clarify?',placeholder='For example: Explain why product rows are different from order count.',key='correction')
 if not available:
     st.info('The local model is not ready. Calculations and evidence review still work. No AI explanation has been generated.')
@@ -89,11 +90,12 @@ if st.button('Generate AI explanation',type='primary',disabled=not available,key
 
 result=st.session_state.get('ai_result')
 if result:
-    st.success('Local model response received. Numerical values and evidence references passed automated checks.')
+    st.success('Local model response received. Python attaches the verified values and evidence references.')
     for claim in result['content']['claims']:
         fact=package['facts'][claim['metric']]
         st.markdown(f'**{names[claim["metric"]]}: {claim["value"]} {fact["unit"]}**')
         st.write(claim['explanation'])
+        st.caption('Metric definition: '+fact['meaning'])
         st.caption('Evidence: '+', '.join(claim['evidence_refs']))
     st.write('Model limitations: '+' '.join(result['content']['limitations']))
     st.caption(f'Model: {result["model"]} · Response: {result["response_id"]} · {result["generated_at"]}')

@@ -74,9 +74,15 @@ def build_evidence(rows, customer, start, end):
     return package
 
 def llm_evidence(package):
-    """Send complete aggregates, exact facts and capped product examples, not every raw row."""
+    """Keep all-history facts; cap invoice examples for the small local model.
+
+    Full invoices and row provenance remain in the original evidence package/UI.
+    """
+    recent=sorted(package['invoices'],key=lambda x:x['Date'],reverse=True)[:10]
     return {k:package[k] for k in ['customer_id','window','facts','source','last_purchase','limitations','evidence_id']} | {
-        'invoices':[{k:v for k,v in invoice.items() if k!='RowIDs'} for invoice in package['invoices']],
+        'recent_invoice_examples':[{k:v for k,v in invoice.items() if k!='RowIDs'} for invoice in recent],
+        'coverage':{'total_invoices':len(package['invoices']),'shown_invoice_examples':len(recent),
+                    'note':'All facts use the complete selected history. Examples are not the population. Full source rows and invoice table are available in the application.'},
         'product_examples':[{'StockCode':r['StockCode'],'Description':r['Description'],'RowID':r['RowID']} for r in package['rows'][:6]],
         'excluded_count':len(package['excluded_rows']),
         'instruction':'Product examples are selected lines, not a complete product ranking.'}

@@ -59,7 +59,7 @@ Exclude missing customer/invoice/product IDs, C-prefixed invoices, non-positive 
 
 ## AI, evidence, and human review
 
-`analytics.py` performs exact calculations and retrieval. `ai.py` sends fixed facts and complete invoice aggregates to an LLM. `app.py` shows the result and evidence. Each AI claim names a metric, exact value, and evidence keys. The validator rejects wrong customers, numbers, missing metrics, or invalid references. This mechanical validation does not prove the prose is semantically correct. Human review is required, especially for unsupported comparative or causal claims.
+`analytics.py` performs exact calculations and retrieval. `ai.py` sends fixed facts and complete computed features and up to ten recent invoice examples to an LLM. `app.py` shows the result and evidence. The model generates explanations and limitations. Python attaches each metric value and source-reference keys directly from the evidence package. The validator checks the assembled customer, numbers and references, and rejects numerical prose outside the relevant supplied facts and exact source dates. This mechanical validation does not prove the prose is semantically correct. Human review is required, especially for unsupported comparative or causal claims.
 
 Reviews remain in session memory until downloaded as JSON. The record identifies the evidence hash and model response. Filter or focus/model changes clear the old AI result, preventing it from appearing under a different customer. A review without a model response is explicitly labeled `computed_evidence_only`.
 
@@ -76,3 +76,9 @@ Tests cover real-data calculations, date refinement, row provenance, missing cus
 Human Design defined customer features. AI Design selected exact structured retrieval and grounded explanation. Human–AI Co-Design adds user filters, invoice inspection, clarification, and explicit review. Codex assisted implementation and debugging. No vector database or multi-agent framework is needed.
 
 Local model generation must be evaluated separately from mocked transport tests. Later work includes broader customer tests, semantic evaluation of explanations, verified duplicate/refund rules, customer segmentation, and eventually community features and 60-day prediction. The current app does not predict churn.
+
+## Local validation
+
+Run python scripts/evaluate_local.py with Ollama running to execute five real-model cases; results are saved to docs/local_model_results.json. These are distinct from the eight offline regression tests. Inspect the wording manually: a valid number alone does not establish that an interpretation is correct. Historical recency refers to the selected analysis date, not today.
+
+The model input is deliberately smaller than the evidence store: full invoice and row tables remain accessible in Streamlit, while the local model receives computed all-history metrics and an explicitly labeled subset of recent invoices. This prevents long histories from overwhelming the small model.
