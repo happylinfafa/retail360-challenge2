@@ -5,7 +5,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 import pytest
 from analytics import load_rows, build_evidence, exclusion
-from ai import validate_response, explain
+from ai import validate_response, explain, DEFAULT_MODEL, local_models
 
 @pytest.fixture
 def rows(): return load_rows()
@@ -52,22 +52,29 @@ def test_06_output_checks_and_missing_evidence(package):
     assert len(validate_response(bad,package))>=2
     bad['customer_id']='17850'; assert 'Wrong customer ID.' in validate_response(bad,package)
     missing=copy.deepcopy(package);missing['facts'].pop('monetary')
-    with pytest.raises(ValueError,match='evidence is missing'): explain(missing,'test-only','model','Overall profile')
+    with pytest.raises(ValueError,match='evidence is missing'): explain(missing)
 
-def test_07_mocked_provider_and_no_key(package):
+def test_07_mocked_local_provider_and_failure(package):
     # Integration contract only: this is NOT a live LLM evaluation.
-    with pytest.raises(ValueError,match='API key'): explain(package,'','model','Overall profile')
-    with patch('openai.OpenAI') as Client:
-        Client.return_value.responses.create.return_value=SimpleNamespace(status='completed',output_text=json.dumps(checked_output(package)),id='mock-response')
-        result=explain(package,'test-key','test-model','Overall profile')
-        kwargs=Client.return_value.responses.create.call_args.kwargs
-        assert kwargs['store'] is False
-        assert result['response_id']=='mock-response'
+    import requests
+    with pytest.raises(ValueError,match='local qwen'): explain(package,'cloud-model')
+    with patch('requests.post') as post:
+        post.return_value.json.return_value={'done':True,'message':{'content':json.dumps(checked_output(package))}}
+        result=explain(package)
+        assert post.call_args.args[0]=='http://127.0.0.1:11434/api/chat'
+        assert post.call_args.kwargs['json']['model']==DEFAULT_MODEL
+        assert result['response_id'].startswith('local-')
         assert result['evidence_id']==package['evidence_id']
+    with patch('requests.post',side_effect=requests.ConnectionError):
+        with pytest.raises(ValueError,match='Local model unavailable'): explain(package)
+    with patch('requests.post',side_effect=requests.Timeout):
+        with pytest.raises(ValueError,match='timed out'): explain(package)
+    with patch('requests.get',side_effect=requests.ConnectionError): assert local_models()==[]
 
 def test_08_streamlit_human_review_and_refinement():
     from streamlit.testing.v1 import AppTest
-    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+    with patch('ai.local_models',return_value=[]):
+        app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
     assert not app.exception
     assert app.button(key='generate').disabled
     app.radio(key='human_decision').set_value('Accept')
