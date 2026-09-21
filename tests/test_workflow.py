@@ -4,7 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 import pytest
-from analytics import load_rows, build_evidence, exclusion
+from analytics import load_rows, build_evidence, exclusion, llm_evidence
 from ai import validate_response, explain, DEFAULT_MODEL, local_models
 
 @pytest.fixture
@@ -34,6 +34,11 @@ def test_03_filter_recalculates(rows,package):
     assert reduced['facts']['frequency']['value']=='2'
     assert reduced['evidence_id']!=package['evidence_id']
     assert all(r['InvoiceDate']>='2011-01-01' for r in reduced['rows'])
+    large=build_evidence(rows,'17850','2009-12-01','2011-12-10')
+    compact=llm_evidence(large)
+    assert compact['facts']==large['facts']
+    assert len(compact['recent_invoice_examples'])==10
+    assert compact['coverage']['total_invoices']==155
 
 def test_04_missing_or_invalid_input(rows):
     with pytest.raises(ValueError,match='not found'): build_evidence(rows,'NOT-A-CUSTOMER','2009-12-01','2011-12-10')
@@ -51,6 +56,14 @@ def test_06_output_checks_and_missing_evidence(package):
     bad=copy.deepcopy(good);bad['claims'][0]['value']='999';bad['claims'][0]['evidence_refs']=['FAKE_INVOICE']
     assert len(validate_response(bad,package))>=2
     bad['customer_id']='17850'; assert 'Wrong customer ID.' in validate_response(bad,package)
+    numeric=copy.deepcopy(good);numeric['claims'][0]['explanation']='The last purchase was 158 days before the reference date.'
+    assert validate_response(numeric,package)==[]
+    numeric['claims'][0]['explanation']='The last purchase was 999 days before the reference date.'
+    assert 'Unverified numerical text in explanation.' in validate_response(numeric,package)
+    numeric['claims'][0]['explanation']='The last purchase was July 5, 2011, which is 158 days before the reference date.'
+    assert validate_response(numeric,package)==[]
+    numeric['claims'][0]['explanation']='The last purchase was July 6, 2011.'
+    assert 'Unverified numerical text in explanation.' in validate_response(numeric,package)
     missing=copy.deepcopy(package);missing['facts'].pop('monetary')
     with pytest.raises(ValueError,match='evidence is missing'): explain(missing)
 
@@ -59,7 +72,8 @@ def test_07_mocked_local_provider_and_failure(package):
     import requests
     with pytest.raises(ValueError,match='local qwen'): explain(package,'cloud-model')
     with patch('requests.post') as post:
-        post.return_value.json.return_value={'done':True,'message':{'content':json.dumps(checked_output(package))}}
+        generated={'explanations':{k:'This describes observed purchases in the selected period.' for k in package['facts']},'limitations':['No prediction of future behavior.']}
+        post.return_value.json.return_value={'done':True,'message':{'content':json.dumps(generated)}}
         result=explain(package)
         assert post.call_args.args[0]=='http://127.0.0.1:11434/api/chat'
         assert post.call_args.kwargs['json']['model']==DEFAULT_MODEL
