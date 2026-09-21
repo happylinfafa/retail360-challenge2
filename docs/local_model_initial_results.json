@@ -1,0 +1,328 @@
+[
+  {
+    "case": "default",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "13085",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "158",
+            "explanation": "The customer has not made a purchase since July 5, 2011, which is 158 days ago.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "8",
+            "explanation": "The customer has made 8 distinct invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "2433.28",
+            "explanation": "The customer has spent a total of \u00a32,433.28 on purchases.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "304.16",
+            "explanation": "The customer's average purchase amount per invoice is \u00a3304.16.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "50",
+            "explanation": "The customer has retained 50 distinct StockCodes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only represents a single retailer and customer.",
+          "Canceled and non-positive records are excluded.",
+          "Refunds are not matched to original purchases.",
+          "Repeated source rows remain visible."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-26b27a75992845f7a26dac44b3dc6e7f",
+      "evidence_id": "8087f810241681f0",
+      "generated_at": "2026-09-21T21:26:43.639514+00:00",
+      "focus": "Overall profile",
+      "duration_seconds": 12.09,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 12.62
+  },
+  {
+    "case": "shorter_window",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "13085",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "158",
+            "explanation": "The customer has made 158 days of recent purchases since their last retained purchase on July 5, 2011.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "2",
+            "explanation": "The customer has retained 2 distinct invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "416.08",
+            "explanation": "The customer has spent a total of \u00a3416.08 on purchases.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "208.04",
+            "explanation": "The average purchase amount per invoice is \u00a3208.04.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "17",
+            "explanation": "The customer has retained 17 distinct StockCodes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only represents a single retailer and selected customers.",
+          "Canceled and non-positive records are excluded; refunds are not matched to original purchases.",
+          "Repeated source rows remain visible; no unverified duplicate removal.",
+          "These descriptive measures do not predict churn or customer intent."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-5367de31874e4671bcad89e9a150975f",
+      "evidence_id": "f301a8df08e424bb",
+      "generated_at": "2026-09-21T21:26:57.196264+00:00",
+      "focus": "Recent purchase activity",
+      "duration_seconds": 13.55,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 13.55
+  },
+  {
+    "case": "other_customer",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "12347",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "3",
+            "explanation": "The customer has not made a purchase since December 7, 2011.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "8",
+            "explanation": "The customer has made 8 distinct invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "5633.32",
+            "explanation": "The customer has spent a total of \u00a35,633.32 on purchases.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "704.17",
+            "explanation": "The average purchase amount per invoice is \u00a3704.17.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "126",
+            "explanation": "The customer has retained 126 distinct product codes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only represents a single retailer and customer.",
+          "Canceled and non-positive records are excluded.",
+          "Refunds are not matched to original purchases.",
+          "Repeated source rows remain visible."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-a66e8e15c87744fcb6882d039d6c4eb5",
+      "evidence_id": "c06e7ff5d5a3646a",
+      "generated_at": "2026-09-21T21:27:10.408356+00:00",
+      "focus": "Product variety",
+      "duration_seconds": 13.2,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 13.22
+  },
+  {
+    "case": "unsupported_request",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "13085",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "158",
+            "explanation": "The customer has not made a purchase since July 5, 2011, which is 158 days ago.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "8",
+            "explanation": "The customer has made 8 distinct invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "2433.28",
+            "explanation": "The customer has spent \u00a32,433.28 on purchases.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "304.16",
+            "explanation": "The customer has spent \u00a3304.16 on average per invoice.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "50",
+            "explanation": "The customer has purchased 50 distinct stock codes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only represents a single retailer and customer.",
+          "Canceled and non-positive records are excluded.",
+          "Repeated source rows remain visible."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-7babc0c5cdb949c894b3a46ced34739e",
+      "evidence_id": "8087f810241681f0",
+      "generated_at": "2026-09-21T21:27:27.131195+00:00",
+      "focus": "Overall profile",
+      "duration_seconds": 16.71,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 16.72
+  },
+  {
+    "case": "large_history",
+    "status": "blocked",
+    "error": "Output failed grounding checks: Unverified numerical text in explanation. Unverified numerical text in explanation. Unverified numerical text in explanation. Unverified numerical text in explanation. Unverified numerical text in explanation.",
+    "rejected_content": {
+      "customer_id": "17850",
+      "claims": [
+        {
+          "metric": "recency",
+          "value": "373",
+          "explanation": "The earliest date in the dataset is '2010-09-21 17:21:00', which is the earliest date in the dataset. The latest date is '2010-12-02 15:27:00', which is the latest date in the dataset.",
+          "evidence_refs": [
+            "LAST_PURCHASE",
+            "WINDOW"
+          ]
+        },
+        {
+          "metric": "frequency",
+          "value": "155",
+          "explanation": "The dataset contains 31 lines that are excluded from the product ranking. These lines are not included in the product ranking.",
+          "evidence_refs": [
+            "ALL_INVOICES"
+          ]
+        },
+        {
+          "metric": "monetary",
+          "value": "56600.08",
+          "explanation": "The dataset contains 414.60 GBP in total, with the highest amount being 691.06 GBP.",
+          "evidence_refs": [
+            "ALL_INVOICES"
+          ]
+        },
+        {
+          "metric": "aov",
+          "value": "365.16",
+          "explanation": "The dataset contains 25 lines that are excluded from the product ranking.",
+          "evidence_refs": [
+            "ALL_INVOICES"
+          ]
+        },
+        {
+          "metric": "diversity",
+          "value": "100",
+          "explanation": "The dataset contains 25 lines that are excluded from the product ranking.",
+          "evidence_refs": [
+            "ALL_ROWS"
+          ]
+        }
+      ],
+      "limitations": [
+        "The dataset contains 31 lines that are excluded from the product ranking.",
+        "The dataset contains 414.60 GBP in total.",
+        "The dataset contains 25 lines that are excluded from the product ranking.",
+        "The dataset contains 25 lines that are excluded from the product ranking.",
+        "The dataset contains 25 lines that are excluded from the product ranking."
+      ]
+    },
+    "elapsed_seconds": 88.11
+  }
+]

@@ -1,0 +1,339 @@
+[
+  {
+    "case": "default",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "13085",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "158",
+            "explanation": "The customer has not made a purchase since July 5, 2011, which is 158 days ago.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "8",
+            "explanation": "The customer has made 8 distinct invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "2433.28",
+            "explanation": "The total purchase amount is \u00a32,433.28.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "304.16",
+            "explanation": "The average order value is \u00a3304.16 per invoice.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "50",
+            "explanation": "The customer has retained 50 distinct StockCodes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only represents this specific retailer and selected customers.",
+          "Canceled and non-positive records are excluded.",
+          "Repeated source rows remain visible.",
+          "These descriptive measures do not predict churn or customer intent."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-1f80651acb2e46779fb4774048e26e89",
+      "evidence_id": "8087f810241681f0",
+      "generated_at": "2026-09-21T21:38:22.371350+00:00",
+      "focus": "Overall profile",
+      "duration_seconds": 25.65,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 25.84
+  },
+  {
+    "case": "shorter_window",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "13085",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "158",
+            "explanation": "The customer has had 158 days since their last retained purchase.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "2",
+            "explanation": "The customer has 2 distinct retained invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "416.08",
+            "explanation": "The customer has spent a total of \u00a3416.08 on purchases.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "208.04",
+            "explanation": "The average order value is \u00a3208.04 per invoice.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "17",
+            "explanation": "The customer has used 17 distinct StockCodes from the product catalog.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only covers a single retailer and selected customers.",
+          "Canceled and non-positive records are excluded.",
+          "Refunds are not matched to original purchases.",
+          "Repeated source rows remain visible.",
+          "These descriptive measures do not predict churn or customer intent."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-b3d5d828390f4a1aa3ed77839981a919",
+      "evidence_id": "f301a8df08e424bb",
+      "generated_at": "2026-09-21T21:38:42.097173+00:00",
+      "focus": "Recent purchase activity",
+      "duration_seconds": 19.72,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 19.73
+  },
+  {
+    "case": "other_customer",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "12347",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "3",
+            "explanation": "The customer has not made a purchase since December 7, 2011.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "8",
+            "explanation": "The customer has made 8 distinct invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "5633.32",
+            "explanation": "The customer has spent a total of \u00a35,633.32 on purchases.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "704.17",
+            "explanation": "The average order value is \u00a3704.17 per invoice.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "126",
+            "explanation": "The customer has retained 126 distinct product codes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only represents a single retailer and selected customers.",
+          "Canceled and non-positive records are excluded.",
+          "Refunds are not matched to original purchases.",
+          "Repeated source rows remain visible.",
+          "These descriptive measures do not predict churn or customer intent."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-f2a6ee48ae7c42d4a1059a203f6b2405",
+      "evidence_id": "c06e7ff5d5a3646a",
+      "generated_at": "2026-09-21T21:39:06.650187+00:00",
+      "focus": "Product variety",
+      "duration_seconds": 24.54,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 24.55
+  },
+  {
+    "case": "unsupported_request",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "13085",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "158",
+            "explanation": "The customer has not made a retained purchase since July 5, 2011, which is 158 days ago.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "8",
+            "explanation": "The customer has made 8 distinct retained invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "2433.28",
+            "explanation": "The customer has spent a total of \u00a32,433.28 on purchases.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "304.16",
+            "explanation": "The average order value (AOV) is \u00a3304.16 per invoice.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "50",
+            "explanation": "The customer has retained 50 distinct StockCodes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only covers this retailer and selected customers.",
+          "Canceled and non-positive records are excluded; refunds are not matched to original purchases.",
+          "Repeated source rows remain visible; no unverified duplicate removal.",
+          "These descriptive measures do not predict churn or customer intent."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-6980be8dd57d4bf39e8f82a662764b1c",
+      "evidence_id": "8087f810241681f0",
+      "generated_at": "2026-09-21T21:39:33.107676+00:00",
+      "focus": "Overall profile",
+      "duration_seconds": 26.44,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 26.45
+  },
+  {
+    "case": "large_history",
+    "status": "grounding_checks_passed",
+    "result": {
+      "content": {
+        "customer_id": "17850",
+        "claims": [
+          {
+            "metric": "recency",
+            "value": "373",
+            "explanation": "The customer has not made a purchase since December 2, 2010, which is 373 days ago.",
+            "evidence_refs": [
+              "LAST_PURCHASE",
+              "WINDOW"
+            ]
+          },
+          {
+            "metric": "frequency",
+            "value": "155",
+            "explanation": "The customer has placed 155 distinct invoices.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "monetary",
+            "value": "56600.08",
+            "explanation": "The customer has spent a total of \u00a356,600.08.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "aov",
+            "value": "365.16",
+            "explanation": "The average order value is \u00a3365.16 per invoice.",
+            "evidence_refs": [
+              "ALL_INVOICES"
+            ]
+          },
+          {
+            "metric": "diversity",
+            "value": "100",
+            "explanation": "The customer has retained 100 distinct StockCodes.",
+            "evidence_refs": [
+              "ALL_ROWS"
+            ]
+          }
+        ],
+        "limitations": [
+          "The data only represents this specific retailer and selected customers.",
+          "Canceled and non-positive records are excluded.",
+          "Repeated source rows remain visible, but no unverified duplicate removal has been performed.",
+          "These descriptive measures do not predict churn or customer intent."
+        ]
+      },
+      "model": "qwen2.5:1.5b",
+      "provider": "Ollama local",
+      "response_id": "local-7eda9690a6754ec4b0ddde4fc8dfdb01",
+      "evidence_id": "f0df618533d88de9",
+      "generated_at": "2026-09-21T21:40:00.342965+00:00",
+      "focus": "Spending and order frequency",
+      "duration_seconds": 27.19,
+      "validation": "Python attaches exact values and evidence references. Generated prose still requires human review."
+    },
+    "elapsed_seconds": 27.22
+  }
+]
