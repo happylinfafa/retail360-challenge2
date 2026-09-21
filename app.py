@@ -5,7 +5,7 @@ from datetime import date, datetime, timezone
 import pandas as pd
 import streamlit as st
 from analytics import load_rows, build_evidence, exclusion
-from ai import explain
+from ai import explain, local_models, DEFAULT_MODEL
 
 st.set_page_config(page_title='Retail360 | Customer evidence',page_icon='🛍️',layout='wide')
 
@@ -25,12 +25,17 @@ with st.sidebar:
     focus=st.selectbox('Explanation focus',['Overall profile','Recent purchase activity','Spending and order frequency','Product variety'],key='focus')
     st.caption('All metrics recalculate when you change the customer or dates.')
     st.divider()
-    st.subheader('Live AI setup')
-    api_key=st.text_input('OpenAI API key',type='password',key='api_key',help='Used only in this session. Never included in downloads or saved reviews.') or os.getenv('OPENAI_API_KEY','')
-    model=st.text_input('API model',value=os.getenv('OPENAI_MODEL','gpt-4.1-mini'),key='model')
-    st.caption('Use a model available to your API project that supports structured outputs.')
-    st.link_button('API key setup','https://platform.openai.com/api-keys')
-    st.caption('No API key? Calculation, filtering, evidence inspection, and evidence review still work. AI generation requires a key.')
+    st.subheader('Free local AI')
+    model=DEFAULT_MODEL
+    available=model in local_models()
+    st.write('Model: '+model)
+    st.caption('Runs on this computer. No API key, account, or paid service is required.')
+    if available: st.success('Local model ready')
+    else:
+        st.warning('Start Ollama and download the model first.')
+        st.code('ollama pull qwen2.5:1.5b')
+    if st.button('Refresh model status'): st.rerun()
+
 
 try:
     package=build_evidence(rows,customer,start,end)
@@ -67,25 +72,24 @@ with right:
 st.subheader('AI explanation')
 st.caption('The model receives exact features, invoice aggregates, selected product descriptions, and source references.')
 correction=st.text_area('What should the explanation clarify?',placeholder='For example: Explain why product rows are different from order count.',key='correction')
-if not api_key:
-    st.info('Live AI is not connected. Add your API key in the sidebar. No AI explanation has been generated.')
-if st.button('Generate AI explanation',type='primary',disabled=not bool(api_key),key='generate'):
+if not available:
+    st.info('The local model is not ready. Calculations and evidence review still work. No AI explanation has been generated.')
+if st.button('Generate AI explanation',type='primary',disabled=not available,key='generate'):
     st.session_state.pop('ai_result',None)
     st.session_state.pop('review_export',None)
+    st.session_state.pop('human_decision',None)
+    st.session_state.pop('review_note',None)
     try:
         with st.spinner('Retrieving evidence and generating explanation…'):
-            st.session_state['ai_result']=explain(package,api_key,model,focus,correction)
+            st.session_state['ai_result']=explain(package,model,focus,correction)
     except ValueError as exc:
         st.error(str(exc))
     except Exception as exc:
-        # Do not expose provider exceptions, request headers, or credentials.
-        status=getattr(exc,'status_code',None)
-        messages={401:'API authentication failed. Check your key.',429:'API quota or rate limit reached. Check your API project billing.',404:'Model not available. Check the model name and project access.'}
-        st.error(messages.get(status,'The AI request failed. Your evidence is still available. Check your connection and model settings, then retry.'))
+        st.error('Local AI could not complete the request. Evidence is still available; check Ollama and retry.')
 
 result=st.session_state.get('ai_result')
 if result:
-    st.success('Live model response received. Numerical values and evidence references passed automated checks.')
+    st.success('Local model response received. Numerical values and evidence references passed automated checks.')
     for claim in result['content']['claims']:
         fact=package['facts'][claim['metric']]
         st.markdown(f'**{names[claim["metric"]]}: {claim["value"]} {fact["unit"]}**')

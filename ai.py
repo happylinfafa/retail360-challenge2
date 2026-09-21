@@ -33,22 +33,50 @@ def validate_response(result, package):
     if not result.get('limitations'): errors.append('Missing limitations.')
     return errors
 
-def explain(package, api_key, model, focus, feedback=''):
-    if not api_key: raise ValueError('Add an API key to generate a live AI explanation.')
-    if not model.strip(): raise ValueError('Enter a model available to your API project.')
+LOCAL_URL = 'http://127.0.0.1:11434'
+DEFAULT_MODEL = 'qwen2.5:1.5b'
+
+def local_models():
+    """Only contact loopback; never route to a paid or cloud provider."""
+    import requests
+    try:
+        response=requests.get(LOCAL_URL+'/api/tags',timeout=2)
+        response.raise_for_status()
+        return [m['name'] for m in response.json()['models'] if not m.get('remote_host')]
+    except (requests.RequestException, ValueError, KeyError):
+        return []
+
+def explain(package, model=DEFAULT_MODEL, focus='Overall profile', feedback=''):
+    import requests
+    import uuid
+    if model != DEFAULT_MODEL:
+        raise ValueError('This application uses the local qwen2.5:1.5b model only.')
     if set(package.get('facts',{})) != {'recency','frequency','monetary','aov','diversity'}:
         raise ValueError('Required numerical evidence is missing. Rebuild the evidence package.')
-    from openai import OpenAI
     payload={'task':focus,'reviewer_note':feedback[:1000],'evidence':llm_evidence(package)}
-    client=OpenAI(api_key=api_key,timeout=45,max_retries=0)
-    response=client.responses.create(model=model.strip(),instructions=INSTRUCTIONS,
-        input=json.dumps(payload),store=False,max_output_tokens=2500,
-        text={'format':{'type':'json_schema','name':'customer_explanation','strict':True,'schema':SCHEMA}})
-    if getattr(response,'status',None) != 'completed' or not response.output_text:
-        raise ValueError('The model did not return a complete explanation. Try again or select another model.')
-    result=json.loads(response.output_text)
-    errors=validate_response(result,package)
+    try:
+        response=requests.post(LOCAL_URL+'/api/chat',json={
+            'model':model,'stream':False,'format':SCHEMA,
+            'messages':[{'role':'system','content':INSTRUCTIONS},
+                        {'role':'user','content':json.dumps(payload)}],
+            'options':{'temperature':0,'num_ctx':8192,'num_predict':1800},
+            'keep_alive':'5m'},timeout=(5,240))
+        response.raise_for_status()
+    except requests.Timeout as exc:
+        raise ValueError('Local model timed out. Close other large applications and retry.') from exc
+    except requests.RequestException as exc:
+        raise ValueError('Local model unavailable. Start Ollama and run: ollama pull qwen2.5:1.5b. No paid API key is needed.') from exc
+    raw=response.json()
+    if not raw.get('done') or raw.get('done_reason') == 'length':
+        raise ValueError('Local model returned an incomplete answer. Please retry.')
+    try:
+        result=json.loads(raw['message']['content'])
+        errors=validate_response(result,package)
+    except (ValueError, KeyError, TypeError, AttributeError) as exc:
+        raise ValueError('Local model returned an invalid response. No explanation was accepted.') from exc
     if errors: raise ValueError('Output failed grounding checks: '+' '.join(errors))
-    return {'content':result,'model':model,'response_id':response.id,'evidence_id':package['evidence_id'],
+    return {'content':result,'model':model,'provider':'Ollama local',
+        'response_id':'local-'+uuid.uuid4().hex,'evidence_id':package['evidence_id'],
         'generated_at':datetime.now(timezone.utc).isoformat(),'focus':focus,
+        'duration_seconds':round(raw.get('total_duration',0)/1e9,2),
         'validation':'Numeric values and reference keys passed automated checks. Prose still requires human review.'}

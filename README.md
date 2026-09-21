@@ -4,7 +4,7 @@ A small Streamlit application for retail analysts to inspect customer behavior a
 
 ## The task
 
-Select a real customer and observation period. Python calculates recency, invoice frequency, positive purchase amount, average invoice value, and distinct product codes. Structured retrieval assembles invoice aggregates and source rows. A live OpenAI Responses API call explains those results. The user inspects evidence, changes filters, requests clarification, and records an acceptance, rejection, or correction.
+Select a real customer and observation period. Python calculates recency, invoice frequency, positive purchase amount, average invoice value, and distinct product codes. Structured retrieval assembles invoice aggregates and source rows. A local Qwen2.5 1.5B model running through Ollama explains those results. The user inspects evidence, changes filters, requests clarification, and records an acceptance, rejection, or correction.
 
 ## Run locally
 
@@ -19,13 +19,23 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-No database or full workbook is needed for the bundled demonstration. Without an API key the calculations, evidence inspection, filtering, and evidence review work. The app explicitly states that no AI explanation has been generated.
+No database or full workbook is needed for the bundled demonstration.
 
-## Connect live AI
+## Free local AI (no key or paid service)
 
-Create a project API key at https://platform.openai.com/api-keys and ensure that the API project has usable billing/quota. Enter the key in the app sidebar password field. Alternatively set `OPENAI_API_KEY` in the process environment. Enter a model available to your API account that supports the Responses API and JSON Schema structured output. The default is `gpt-4.1-mini`; account access is not assumed. Set `OPENAI_MODEL` to override it.
+Install Ollama from https://ollama.com/download/windows (macOS/Linux versions are also available). Open a terminal and run:
 
-The app sends selected public UCI evidence to OpenAI only when Generate is clicked. It uses `store=False`. Keys are not written to files, evidence downloads, review records, or Git. Do not commit keys. A failed provider request produces a visible error, never a fabricated AI answer.
+```sh
+ollama pull qwen2.5:1.5b
+```
+
+Start Ollama, then run Streamlit. Click **Refresh model status**, select a customer, and click **Generate AI explanation**. The model is about 986 MB; the Ollama runtime requires additional disk space. Initial downloads require internet; inference runs locally after download. No OpenAI account, subscription, API key, or paid credit is required. Generation uses your computer's memory and may take a few minutes on CPU.
+
+The application sends evidence only to `127.0.0.1:11434`, the Ollama service on the same computer. It uses only the fixed local model `qwen2.5:1.5b`; it does not offer cloud models. Technically this is a local HTTP interface, not a paid online API. This setup is intended for local demonstration; deploying Streamlit alone to a cloud host will not carry over your local model.
+
+If Ollama is unavailable, calculations and evidence review remain usable, but the application does not invent an AI answer. Failed numeric/provenance checks display an error instead of an explanation.
+
+Model: https://ollama.com/library/qwen2.5:1.5b (Apache 2.0). Runtime: https://github.com/ollama/ollama. Structured output: https://docs.ollama.com/capabilities/structured-outputs.
 
 ## Real data and provenance
 
@@ -65,4 +75,4 @@ Tests cover real-data calculations, date refinement, row provenance, missing cus
 
 Human Design defined customer features. AI Design selected exact structured retrieval and grounded explanation. Human–AI Co-Design adds user filters, invoice inspection, clarification, and explicit review. Codex assisted implementation and debugging. No vector database or multi-agent framework is needed.
 
-Live API evaluation requires a configured key. Later work includes broader customer tests, semantic evaluation of explanations, verified duplicate/refund rules, customer segmentation, and eventually community features and 60-day prediction. The current app does not predict churn.
+Local model generation must be evaluated separately from mocked transport tests. Later work includes broader customer tests, semantic evaluation of explanations, verified duplicate/refund rules, customer segmentation, and eventually community features and 60-day prediction. The current app does not predict churn.

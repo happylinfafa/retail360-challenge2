@@ -75,7 +75,8 @@ def build_evidence(rows, customer, start, end):
 
 def llm_evidence(package):
     """Send complete aggregates, exact facts and capped product examples, not every raw row."""
-    return {k:package[k] for k in ['customer_id','window','facts','invoices','source','last_purchase','limitations','evidence_id']} | {
+    return {k:package[k] for k in ['customer_id','window','facts','source','last_purchase','limitations','evidence_id']} | {
+        'invoices':[{k:v for k,v in invoice.items() if k!='RowIDs'} for invoice in package['invoices']],
         'product_examples':[{'StockCode':r['StockCode'],'Description':r['Description'],'RowID':r['RowID']} for r in package['rows'][:6]],
         'excluded_count':len(package['excluded_rows']),
         'instruction':'Product examples are selected lines, not a complete product ranking.'}
