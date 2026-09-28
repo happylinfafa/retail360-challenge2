@@ -1,5 +1,6 @@
 # Retail360 — Challenge 2
 
+🚀 Try the live app here: [Retail360 Streamlit App](https://retail360-challenge2-nlavk4zsab8qmxgkvbfmwy.streamlit.app/)
 A small Streamlit application for retail analysts to inspect customer behavior and review an evidence-grounded AI explanation.
 
 ## Repurchase prediction and graph ablation
