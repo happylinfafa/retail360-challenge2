@@ -2,6 +2,20 @@
 
 A small Streamlit application for retail analysts to inspect customer behavior and review an evidence-grounded AI explanation.
 
+## Repurchase prediction and graph ablation
+
+The research question is whether a customer--product graph feature improves 60-day repurchase prediction beyond RFM and temporal features. The frozen protocol uses a 180-day historical window, a future 60-day label, chronological train/validation/test snapshots, and no future data in features.
+
+After downloading the complete UCI workbook, build data and train the local models:
+
+```sh
+python scripts/prepare_repurchase.py /path/to/online_retail_II.xlsx
+python scripts/train_models.py
+streamlit run app.py
+```
+
+Open **Repurchase** in Streamlit's page navigation to inspect historical probabilities, model comparison, graph evidence, customer groups, and original transaction rows. The graph feature measures the historical customer degree of the products a customer bought. Details and limitations are in [model results](docs/model_results.md) and [the frozen protocol](docs/repurchase_protocol.md). Generated full-data benchmark and model files remain local and are excluded from Git.
+
 ## The task
 
 Select a real customer and observation period. Python calculates recency, invoice frequency, positive purchase amount, average invoice value, and distinct product codes. Structured retrieval assembles invoice aggregates and source rows. A local Qwen2.5 1.5B model running through Ollama explains those results. The user inspects evidence, changes filters, requests clarification, and records an acceptance, rejection, or correction.

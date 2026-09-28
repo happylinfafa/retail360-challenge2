@@ -1,0 +1,10 @@
+{
+  "selected_model": "full_logistic",
+  "criterion": "Highest validation average precision; ties use fixed candidate order.",
+  "threshold_rule": "Validation F1, fixed grid 0.05..0.95 step 0.05.",
+  "test_used_for_selection": false,
+  "seed": 42,
+  "sklearn_version": "1.9.1",
+  "protocol_version": "repurchase-180d-60d-v1",
+  "manifest_sha256": "addc01858f50fc7610bf618a97691a846b2503704bd69821ad779803d442bbfb"
+}

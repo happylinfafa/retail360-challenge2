@@ -1,0 +1,33 @@
+{
+  "fit_cutoff": "2011-03-01",
+  "k": 2,
+  "selection": "Largest training silhouette among k=2..5; no future outcomes used.",
+  "silhouette_train": 0.4663230549345357,
+  "davies_bouldin_train": 0.912992551389749,
+  "candidates": [
+    {
+      "k": 2,
+      "silhouette": 0.4663230549345357
+    },
+    {
+      "k": 3,
+      "silhouette": 0.3452619783778555
+    },
+    {
+      "k": 4,
+      "silhouette": 0.3861064006330382
+    },
+    {
+      "k": 5,
+      "silhouette": 0.32316317895119084
+    }
+  ],
+  "bootstrap_ari_fixed_train_transform": [
+    0.981764109162052,
+    0.9492934484204746,
+    0.9926904089668306,
+    0.9745763981901159,
+    0.9975612080061511
+  ],
+  "stability_note": "Five bootstrap K-means refits with fixed training transform; not proof of temporal stability."
+}
