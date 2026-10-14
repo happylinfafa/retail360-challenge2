@@ -1,0 +1,129 @@
+{
+  "window": {
+    "startInclusive": "2011-03-05",
+    "endExclusive": "2011-09-01"
+  },
+  "sourceSampleSha256": "a881ff4a685304cb1be2b144ff2ec958d33cbdc45f9a3fe114244cbc7a1294b9",
+  "scope": "All valid rows in this window from the existing illustrative sample, NOT the complete UCI dataset",
+  "counts": {
+    "DataSource": 1,
+    "Customer": 2,
+    "Invoice": 4,
+    "Product": 58,
+    "OrderLine": 73
+  },
+  "relationships": {
+    "PLACED": 4,
+    "HAS_LINE": 73,
+    "OF_PRODUCT": 73,
+    "DERIVED_FROM": 73,
+    "RECORDED_IN": 4
+  },
+  "similarity": [
+    {
+      "customer": "12347",
+      "other": "13085",
+      "productsA": 50,
+      "productsB": 9,
+      "shared": [
+        "21791"
+      ],
+      "jaccard": 0.017241379310344827
+    }
+  ],
+  "evidence": [
+    {
+      "customer": "12347",
+      "invoice": "549222",
+      "date": "2011-04-07T10:43:00",
+      "product": "21791",
+      "quantity": 12,
+      "sourceRow": "Year 2010-2011:148293",
+      "file": "online_retail_II.xlsx"
+    },
+    {
+      "customer": "12347",
+      "invoice": "562032",
+      "date": "2011-08-02T08:48:00",
+      "product": "21791",
+      "quantity": 24,
+      "sourceRow": "Year 2010-2011:286643",
+      "file": "online_retail_II.xlsx"
+    },
+    {
+      "customer": "13085",
+      "invoice": "558996",
+      "date": "2011-07-05T12:11:00",
+      "product": "21791",
+      "quantity": 12,
+      "sourceRow": "Year 2010-2011:250075",
+      "file": "online_retail_II.xlsx"
+    }
+  ],
+  "tests": [
+    {
+      "test": "Imported line count",
+      "actual": 73,
+      "expected": 73,
+      "passed": true
+    },
+    {
+      "test": "Five node types",
+      "actual": 5,
+      "expected": 5,
+      "passed": true
+    },
+    {
+      "test": "Five relationship types",
+      "actual": 5,
+      "expected": 5,
+      "passed": true
+    },
+    {
+      "test": "Every line has source",
+      "actual": 73,
+      "expected": 73,
+      "passed": true
+    },
+    {
+      "test": "Graph shared products match pandas",
+      "actual": [
+        "21791"
+      ],
+      "expected": [
+        "21791"
+      ],
+      "passed": true
+    },
+    {
+      "test": "Graph Jaccard matches pandas",
+      "actual": 0.01724137931,
+      "expected": 0.01724137931,
+      "passed": true
+    },
+    {
+      "test": "Evidence has source row",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "Missing customer returns no result",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Empty future window returns no result",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Import is idempotent",
+      "actual": 138,
+      "expected": 138,
+      "passed": true
+    }
+  ]
+}

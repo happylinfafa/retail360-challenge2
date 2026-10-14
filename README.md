@@ -3,6 +3,10 @@
 🚀 Try the live app here: [Retail360 Streamlit App](https://retail360-challenge2-nlavk4zsab8qmxgkvbfmwy.streamlit.app/)
 A small Streamlit application for retail analysts to inspect customer behavior and review an evidence-grounded AI explanation.
 
+## Challenge 3 GraphRAG prototype
+
+The local Neo4j customer-product graph and free local-LLM GraphRAG prototype are documented in [challenge3/README.md](challenge3/README.md). They require local Neo4j and Ollama and are separate from the deployed Challenge 2 app.
+
 ## Repurchase prediction and graph ablation
 
 The research question is whether a customer--product graph feature improves 60-day repurchase prediction beyond RFM and temporal features. The frozen protocol uses a 180-day historical window, a future 60-day label, chronological train/validation/test snapshots, and no future data in features.

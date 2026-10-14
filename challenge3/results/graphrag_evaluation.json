@@ -1,0 +1,404 @@
+{
+  "generatedAt": "2026-10-14T23:47:16.736074+00:00",
+  "context": "Real local Neo4j KG + local qwen2.5:1.5b, illustrative UCI sample",
+  "passed": 4,
+  "total": 4,
+  "cases": [
+    {
+      "case": "basic",
+      "question": "What did customer 12347 buy in invoice 549222?",
+      "passed": true,
+      "answer": "Customer 12347 placed invoice 549222 on 2011-04-07T10:43:00. The graph contains 24 order lines and 24 distinct products for it.",
+      "llm": {
+        "interpretation": "The retrieved invoice includes SMALL FOLDING SCISSOR(POINTED EDGE), RED RETROSPOT PURSE, RED RETROSPOT OVEN GLOVE DOUBLE.",
+        "limitation": "This invoice alone cannot describe the customer\u2019s broader purchase history.",
+        "selectedEvidenceIndices": [
+          0,
+          1,
+          2
+        ]
+      },
+      "llmVerified": true,
+      "llmCheck": null,
+      "facts": {
+        "customer": "12347",
+        "invoice": "549222",
+        "date": "2011-04-07T10:43:00",
+        "lineCount": 24,
+        "distinctProducts": 24
+      },
+      "evidence": [
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "16008",
+          "description": "SMALL FOLDING SCISSOR(POINTED EDGE)",
+          "quantity": 24,
+          "rowId": "Year 2010-2011:148308",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "20665",
+          "description": "RED RETROSPOT PURSE",
+          "quantity": 6,
+          "rowId": "Year 2010-2011:148291",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "21041",
+          "description": "RED RETROSPOT OVEN GLOVE DOUBLE",
+          "quantity": 6,
+          "rowId": "Year 2010-2011:148301",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "21731",
+          "description": "RED TOADSTOOL LED NIGHT LIGHT",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148304",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "21791",
+          "description": "VINTAGE HEADS AND TAILS CARD GAME",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148293",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "21975",
+          "description": "PACK OF 60 DINOSAUR CAKE CASES",
+          "quantity": 24,
+          "rowId": "Year 2010-2011:148300",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22195",
+          "description": "LARGE HEART MEASURING SPOONS",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148298",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22196",
+          "description": "SMALL HEART MEASURING SPOONS",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148299",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22371",
+          "description": "AIRLINE BAG VINTAGE TOKYO 78",
+          "quantity": 4,
+          "rowId": "Year 2010-2011:148289",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22374",
+          "description": "AIRLINE BAG VINTAGE JET SET RED",
+          "quantity": 4,
+          "rowId": "Year 2010-2011:148288",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22375",
+          "description": "AIRLINE BAG VINTAGE JET SET BROWN",
+          "quantity": 4,
+          "rowId": "Year 2010-2011:148290",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22376",
+          "description": "AIRLINE BAG VINTAGE JET SET WHITE",
+          "quantity": 4,
+          "rowId": "Year 2010-2011:148287",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22423",
+          "description": "REGENCY CAKESTAND 3 TIER",
+          "quantity": 3,
+          "rowId": "Year 2010-2011:148302",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22432",
+          "description": "WATERING CAN PINK BUNNY",
+          "quantity": 6,
+          "rowId": "Year 2010-2011:148296",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22492",
+          "description": "MINI PAINT SET VINTAGE",
+          "quantity": 36,
+          "rowId": "Year 2010-2011:148305",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22497",
+          "description": "SET OF 2 TINS VINTAGE BATHROOM",
+          "quantity": 4,
+          "rowId": "Year 2010-2011:148310",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22550",
+          "description": "HOLIDAY FUN LUDO",
+          "quantity": 8,
+          "rowId": "Year 2010-2011:148294",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22699",
+          "description": "ROSES REGENCY TEACUP AND SAUCER",
+          "quantity": 6,
+          "rowId": "Year 2010-2011:148303",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22774",
+          "description": "RED DRAWER KNOB ACRYLIC EDWARDIAN",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148297",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "22821",
+          "description": "GIFT BAG PSYCHEDELIC APPLES",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148309",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "23076",
+          "description": "ICE CREAM SUNDAE LIP GLOSS",
+          "quantity": 240,
+          "rowId": "Year 2010-2011:148292",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "23177",
+          "description": "TREASURE ISLAND BOOK BOX",
+          "quantity": 8,
+          "rowId": "Year 2010-2011:148295",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "84559A",
+          "description": "3D SHEET OF DOG STICKERS",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148306",
+          "sourceFile": "online_retail_II.xlsx"
+        },
+        {
+          "customer": "12347",
+          "invoice": "549222",
+          "date": "2011-04-07T10:43:00",
+          "product": "84559B",
+          "description": "3D SHEET OF CAT STICKERS",
+          "quantity": 12,
+          "rowId": "Year 2010-2011:148307",
+          "sourceFile": "online_retail_II.xlsx"
+        }
+      ],
+      "model": "qwen2.5:1.5b",
+      "human_review": "LLM wording must be checked against the listed source rows."
+    },
+    {
+      "case": "multi_hop",
+      "question": "Which orders show both customer 12347 and customer 13085 bought a shared product?",
+      "passed": true,
+      "answer": "Customers 12347 and 13085 share 1 distinct purchased product(s) in the selected historical window. Supporting invoices: 12347: 549222, 562032; 13085: 558996.",
+      "llm": {
+        "interpretation": "Both customers bought VINTAGE HEADS AND TAILS CARD GAME in the selected history.",
+        "limitation": "A shared product does not establish broad customer similarity.",
+        "selectedEvidenceIndices": [
+          0
+        ]
+      },
+      "llmVerified": true,
+      "llmCheck": null,
+      "facts": {
+        "customers": [
+          "12347",
+          "13085"
+        ],
+        "sharedProducts": 1,
+        "invoicesA": [
+          "549222",
+          "562032"
+        ],
+        "invoicesB": [
+          "558996"
+        ]
+      },
+      "evidence": [
+        {
+          "product": "21791",
+          "description": "VINTAGE HEADS AND TAILS CARD GAME",
+          "invoiceA": "549222",
+          "dateA": "2011-04-07T10:43:00",
+          "rowA": "Year 2010-2011:148293",
+          "fileA": "online_retail_II.xlsx",
+          "invoiceB": "558996",
+          "dateB": "2011-07-05T12:11:00",
+          "rowB": "Year 2010-2011:250075",
+          "fileB": "online_retail_II.xlsx"
+        },
+        {
+          "product": "21791",
+          "description": "VINTAGE HEADS AND TAILS CARD GAME",
+          "invoiceA": "562032",
+          "dateA": "2011-08-02T08:48:00",
+          "rowA": "Year 2010-2011:286643",
+          "fileA": "online_retail_II.xlsx",
+          "invoiceB": "558996",
+          "dateB": "2011-07-05T12:11:00",
+          "rowB": "Year 2010-2011:250075",
+          "fileB": "online_retail_II.xlsx"
+        }
+      ],
+      "model": "qwen2.5:1.5b",
+      "human_review": "LLM wording must be checked against the listed source rows."
+    },
+    {
+      "case": "research",
+      "question": "How similar are customer 12347 and customer 13085 based on purchased products?",
+      "passed": true,
+      "answer": "Customers 12347 and 13085 bought 50 and 9 distinct products, respectively. They share 1 product(s) out of 58 in the union. Jaccard similarity is 0.017241.",
+      "llm": {
+        "interpretation": "The observed product overlap is low; a shared item is VINTAGE HEADS AND TAILS CARD GAME.",
+        "limitation": "This small sample does not establish customer preferences or future purchases.",
+        "selectedEvidenceIndices": [
+          0
+        ]
+      },
+      "llmVerified": true,
+      "llmCheck": null,
+      "facts": {
+        "customers": [
+          "12347",
+          "13085"
+        ],
+        "productsA": 50,
+        "productsB": 9,
+        "sharedProducts": [
+          "21791"
+        ],
+        "unionProducts": 58,
+        "jaccard": 0.017241,
+        "windowStart": "2011-03-05",
+        "windowEndExclusive": "2011-09-01"
+      },
+      "evidence": [
+        {
+          "product": "21791",
+          "description": "VINTAGE HEADS AND TAILS CARD GAME",
+          "invoiceA": "549222",
+          "dateA": "2011-04-07T10:43:00",
+          "rowA": "Year 2010-2011:148293",
+          "fileA": "online_retail_II.xlsx",
+          "invoiceB": "558996",
+          "dateB": "2011-07-05T12:11:00",
+          "rowB": "Year 2010-2011:250075",
+          "fileB": "online_retail_II.xlsx"
+        },
+        {
+          "product": "21791",
+          "description": "VINTAGE HEADS AND TAILS CARD GAME",
+          "invoiceA": "562032",
+          "dateA": "2011-08-02T08:48:00",
+          "rowA": "Year 2010-2011:286643",
+          "fileA": "online_retail_II.xlsx",
+          "invoiceB": "558996",
+          "dateB": "2011-07-05T12:11:00",
+          "rowB": "Year 2010-2011:250075",
+          "fileB": "online_retail_II.xlsx"
+        }
+      ],
+      "model": "qwen2.5:1.5b",
+      "human_review": "LLM wording must be checked against the listed source rows."
+    },
+    {
+      "case": "failure",
+      "question": "What did customer 99999 buy in invoice 999999?",
+      "passed": true,
+      "answer": "The selected graph contains insufficient evidence to answer this question.",
+      "llm": "No interpretation generated because the graph evidence is insufficient.",
+      "llmVerified": false,
+      "llmCheck": null,
+      "facts": {},
+      "evidence": [],
+      "model": "qwen2.5:1.5b",
+      "human_review": "LLM wording must be checked against the listed source rows."
+    }
+  ]
+}
