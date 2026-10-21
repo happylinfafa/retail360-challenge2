@@ -1,0 +1,62 @@
+{
+  "method": "Fixed-weight one-layer GraphSAGE-style mean aggregator; no training",
+  "nodeFeatures": "One-hot StockCode vectors; customer initial vectors are zero",
+  "source": "Existing Neo4j Customer\u2192Invoice\u2192OrderLine\u2192Product paths",
+  "customerCount": 2,
+  "productCount": 58,
+  "purchaseEdges": 59,
+  "messagePassingExample": {
+    "customer": "12347",
+    "neighborCount": 50,
+    "sharedProduct": "21791",
+    "sharedProductContribution": 0.02,
+    "formula": "h_customer^(1) = mean(one_hot(product) for product in unique purchases)"
+  },
+  "candidateRanking": [
+    {
+      "customer": "12347",
+      "other": "13085",
+      "productsCustomer": 50,
+      "productsOther": 9,
+      "sharedProducts": [
+        "21791"
+      ],
+      "jaccardBaseline": 0.017241379310344827,
+      "embeddingCosine": 0.04714045207910316,
+      "sharedEvidence": {
+        "21791": [
+          {
+            "invoice": "549222",
+            "sourceRow": "Year 2010-2011:148293",
+            "sourceFile": "online_retail_II.xlsx"
+          },
+          {
+            "invoice": "562032",
+            "sourceRow": "Year 2010-2011:286643",
+            "sourceFile": "online_retail_II.xlsx"
+          },
+          {
+            "invoice": "558996",
+            "sourceRow": "Year 2010-2011:250075",
+            "sourceFile": "online_retail_II.xlsx"
+          }
+        ]
+      }
+    }
+  ],
+  "edgeAblation": {
+    "removedFromCustomer": "13085",
+    "removedSharedProducts": [
+      "21791"
+    ],
+    "cosineAfterRemoval": 0.0
+  },
+  "checks": {
+    "one_hot_dimension_matches_product_count": true,
+    "every_customer_has_embedding": true,
+    "baseline_is_exact_set_jaccard": true,
+    "removing_shared_edges_does_not_increase_cosine": true,
+    "shared_items_have_source_rows": true
+  },
+  "interpretation": "A positive cosine shows shared product messages. It does not establish improved retrieval quality or predictive performance."
+}
