@@ -1,0 +1,18 @@
+{
+  "runId": "uci-retail-ii-20110305-20110901-seed5588",
+  "window": {
+    "startInclusive": "2011-03-05",
+    "endExclusive": "2011-09-01"
+  },
+  "validRowsInWindow": 155362,
+  "eligibleCustomers": 888,
+  "passes": 7,
+  "counts": {
+    "customers": 300,
+    "communities": 68,
+    "purchases": 23702,
+    "similarityEdges": 1684
+  },
+  "existingChallenge3InvoicesFor12347": 3,
+  "note": "Exploratory sampled communities, not validated preference groups."
+}

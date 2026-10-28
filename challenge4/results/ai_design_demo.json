@@ -1,0 +1,714 @@
+{
+  "status": "exploratory AI Design; not a deployed Neo4j/GraphRAG integration",
+  "source": "UCI Online Retail II, Year 2010-2011 worksheet",
+  "sourceURL": "https://archive.ics.uci.edu/dataset/502/online+retail+ii",
+  "sourceSha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+  "window": {
+    "startInclusive": "2011-03-05",
+    "endExclusive": "2011-09-01"
+  },
+  "filters": "known Customer ID, valid StockCode, non-cancelled invoice, positive Quantity and Price",
+  "cohort": {
+    "validRowsInWindow": 155362,
+    "customersInWindow": 2772,
+    "eligibleCustomers": 888,
+    "selection": "seeded random 300 of eligible, seed 5588",
+    "minInvoices": 3,
+    "minDistinctProducts": 8
+  },
+  "projection": {
+    "customerNodes": 300,
+    "similarityEdges": 1684,
+    "minSharedProducts": 3,
+    "minJaccard": 0.1
+  },
+  "method": {
+    "name": "first-phase local modularity optimization",
+    "fullLouvainOrLeiden": false,
+    "randomSeed": 5588,
+    "passes": 7
+  },
+  "communityCount": 68,
+  "communitiesAtLeastThree": 17,
+  "topCommunities": [
+    {
+      "groupId": "17841",
+      "size": 54,
+      "topProducts": [
+        {
+          "stockCode": "47566",
+          "description": "PARTY BUNTING",
+          "customerCount": 34
+        },
+        {
+          "stockCode": "23298",
+          "description": "SPOTTY BUNTING",
+          "customerCount": 31
+        },
+        {
+          "stockCode": "22720",
+          "description": "SET OF 3 CAKE TINS PANTRY DESIGN ",
+          "customerCount": 29
+        },
+        {
+          "stockCode": "85123A",
+          "description": "WHITE HANGING HEART T-LIGHT HOLDER",
+          "customerCount": 26
+        },
+        {
+          "stockCode": "21212",
+          "description": "PACK OF 72 RETROSPOT CAKE CASES",
+          "customerCount": 25
+        }
+      ]
+    },
+    {
+      "groupId": "16523",
+      "size": 42,
+      "topProducts": [
+        {
+          "stockCode": "23206",
+          "description": "LUNCH BAG APPLE DESIGN",
+          "customerCount": 30
+        },
+        {
+          "stockCode": "85099B",
+          "description": "JUMBO BAG RED RETROSPOT",
+          "customerCount": 30
+        },
+        {
+          "stockCode": "23209",
+          "description": "LUNCH BAG VINTAGE DOILY ",
+          "customerCount": 30
+        },
+        {
+          "stockCode": "20725",
+          "description": "LUNCH BAG RED RETROSPOT",
+          "customerCount": 29
+        },
+        {
+          "stockCode": "20727",
+          "description": "LUNCH BAG  BLACK SKULL.",
+          "customerCount": 29
+        }
+      ]
+    },
+    {
+      "groupId": "13209",
+      "size": 34,
+      "topProducts": [
+        {
+          "stockCode": "22382",
+          "description": "LUNCH BAG SPACEBOY DESIGN ",
+          "customerCount": 15
+        },
+        {
+          "stockCode": "22727",
+          "description": "ALARM CLOCK BAKELIKE RED ",
+          "customerCount": 15
+        },
+        {
+          "stockCode": "20725",
+          "description": "LUNCH BAG RED RETROSPOT",
+          "customerCount": 15
+        },
+        {
+          "stockCode": "23209",
+          "description": "LUNCH BAG VINTAGE DOILY ",
+          "customerCount": 14
+        },
+        {
+          "stockCode": "22555",
+          "description": "PLASTERS IN TIN STRONGMAN",
+          "customerCount": 13
+        }
+      ]
+    },
+    {
+      "groupId": "17396",
+      "size": 29,
+      "topProducts": [
+        {
+          "stockCode": "22423",
+          "description": "REGENCY CAKESTAND 3 TIER",
+          "customerCount": 25
+        },
+        {
+          "stockCode": "22699",
+          "description": "ROSES REGENCY TEACUP AND SAUCER ",
+          "customerCount": 23
+        },
+        {
+          "stockCode": "22697",
+          "description": "GREEN REGENCY TEACUP AND SAUCER",
+          "customerCount": 23
+        },
+        {
+          "stockCode": "22698",
+          "description": "PINK REGENCY TEACUP AND SAUCER",
+          "customerCount": 20
+        },
+        {
+          "stockCode": "23173",
+          "description": "REGENCY TEAPOT ROSES ",
+          "customerCount": 17
+        }
+      ]
+    },
+    {
+      "groupId": "15738",
+      "size": 18,
+      "topProducts": [
+        {
+          "stockCode": "21080",
+          "description": "SET/20 RED RETROSPOT PAPER NAPKINS ",
+          "customerCount": 11
+        },
+        {
+          "stockCode": "21086",
+          "description": "SET/6 RED SPOTTY PAPER CUPS",
+          "customerCount": 10
+        },
+        {
+          "stockCode": "21212",
+          "description": "PACK OF 72 RETROSPOT CAKE CASES",
+          "customerCount": 10
+        },
+        {
+          "stockCode": "21094",
+          "description": "SET/6 RED SPOTTY PAPER PLATES",
+          "customerCount": 10
+        },
+        {
+          "stockCode": "22090",
+          "description": "PAPER BUNTING RETROSPOT",
+          "customerCount": 10
+        }
+      ]
+    },
+    {
+      "groupId": "12747",
+      "size": 16,
+      "topProducts": [
+        {
+          "stockCode": "85123A",
+          "description": "WHITE HANGING HEART T-LIGHT HOLDER",
+          "customerCount": 12
+        },
+        {
+          "stockCode": "82482",
+          "description": "WOODEN PICTURE FRAME WHITE FINISH",
+          "customerCount": 9
+        },
+        {
+          "stockCode": "84879",
+          "description": "ASSORTED COLOUR BIRD ORNAMENT",
+          "customerCount": 8
+        },
+        {
+          "stockCode": "22423",
+          "description": "REGENCY CAKESTAND 3 TIER",
+          "customerCount": 8
+        },
+        {
+          "stockCode": "22607",
+          "description": "WOODEN ROUNDERS GARDEN SET ",
+          "customerCount": 7
+        }
+      ]
+    },
+    {
+      "groupId": "14235",
+      "size": 8,
+      "topProducts": [
+        {
+          "stockCode": "22681",
+          "description": "FRENCH BLUE METAL DOOR SIGN 6",
+          "customerCount": 6
+        },
+        {
+          "stockCode": "22683",
+          "description": "FRENCH BLUE METAL DOOR SIGN 8",
+          "customerCount": 6
+        },
+        {
+          "stockCode": "22676",
+          "description": "FRENCH BLUE METAL DOOR SIGN 1",
+          "customerCount": 6
+        },
+        {
+          "stockCode": "22680",
+          "description": "FRENCH BLUE METAL DOOR SIGN 5",
+          "customerCount": 6
+        },
+        {
+          "stockCode": "22682",
+          "description": "FRENCH BLUE METAL DOOR SIGN 7",
+          "customerCount": 6
+        }
+      ]
+    },
+    {
+      "groupId": "13089",
+      "size": 7,
+      "topProducts": [
+        {
+          "stockCode": "22384",
+          "description": "LUNCH BAG PINK POLKADOT",
+          "customerCount": 6
+        },
+        {
+          "stockCode": "20727",
+          "description": "LUNCH BAG  BLACK SKULL.",
+          "customerCount": 6
+        },
+        {
+          "stockCode": "21212",
+          "description": "PACK OF 72 RETROSPOT CAKE CASES",
+          "customerCount": 6
+        },
+        {
+          "stockCode": "22423",
+          "description": "REGENCY CAKESTAND 3 TIER",
+          "customerCount": 5
+        },
+        {
+          "stockCode": "84991",
+          "description": "60 TEATIME FAIRY CAKE CASES",
+          "customerCount": 5
+        }
+      ]
+    }
+  ],
+  "graphPreview": [
+    {
+      "groupId": "17841",
+      "groupSize": 54,
+      "center": "15719",
+      "links": [
+        {
+          "peer": "15356",
+          "jaccard": 0.21843,
+          "sharedProductCount": 64
+        },
+        {
+          "peer": "15615",
+          "jaccard": 0.207143,
+          "sharedProductCount": 58
+        },
+        {
+          "peer": "16745",
+          "jaccard": 0.198444,
+          "sharedProductCount": 51
+        }
+      ]
+    },
+    {
+      "groupId": "16523",
+      "groupSize": 42,
+      "center": "17091",
+      "links": [
+        {
+          "peer": "17068",
+          "jaccard": 0.341463,
+          "sharedProductCount": 28
+        },
+        {
+          "peer": "14709",
+          "jaccard": 0.283784,
+          "sharedProductCount": 21
+        },
+        {
+          "peer": "16477",
+          "jaccard": 0.267606,
+          "sharedProductCount": 19
+        }
+      ]
+    }
+  ],
+  "exampleRetrieval": {
+    "question": "Which customers in 15719's community bought similar products, and why?",
+    "target": "15719",
+    "groupId": "17841",
+    "groupSize": 54,
+    "peers": [
+      {
+        "peer": "15356",
+        "jaccard": 0.21843,
+        "sharedProductCount": 64,
+        "sharedProducts": [
+          "20713",
+          "20717",
+          "20723",
+          "20724",
+          "20727",
+          "20728",
+          "21033",
+          "21908",
+          "21930",
+          "21931",
+          "21937",
+          "21975",
+          "22355",
+          "22356",
+          "22380",
+          "22382",
+          "22383",
+          "22384",
+          "22385",
+          "22417",
+          "22456",
+          "22488",
+          "22629",
+          "22662",
+          "22663",
+          "22664",
+          "22666",
+          "22720",
+          "22722",
+          "22907",
+          "22975",
+          "22993",
+          "23191",
+          "23192",
+          "23199",
+          "23200",
+          "23201",
+          "23202",
+          "23203",
+          "23204",
+          "23206",
+          "23207",
+          "23208",
+          "23209",
+          "23241",
+          "23242",
+          "23298",
+          "23300",
+          "23301",
+          "47566",
+          "47566B",
+          "82482",
+          "82494L",
+          "82551",
+          "82552",
+          "82580",
+          "82581",
+          "82583",
+          "84879",
+          "84991",
+          "85071B",
+          "85123A",
+          "85152",
+          "85183B"
+        ],
+        "evidence": [
+          {
+            "stockCode": "20713",
+            "targetRow": {
+              "product": "20713",
+              "description": "JUMBO BAG OWLS",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128739"
+            },
+            "peerRow": {
+              "product": "20713",
+              "description": "JUMBO BAG OWLS",
+              "invoice": "557233",
+              "date": "2011-06-17T14:44:00",
+              "sourceRow": "Year 2010-2011:231094"
+            }
+          },
+          {
+            "stockCode": "20717",
+            "targetRow": {
+              "product": "20717",
+              "description": "STRAWBERRY SHOPPER BAG",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128746"
+            },
+            "peerRow": {
+              "product": "20717",
+              "description": "STRAWBERRY SHOPPER BAG",
+              "invoice": "557233",
+              "date": "2011-06-17T14:44:00",
+              "sourceRow": "Year 2010-2011:231091"
+            }
+          },
+          {
+            "stockCode": "20723",
+            "targetRow": {
+              "product": "20723",
+              "description": "STRAWBERRY CHARLOTTE BAG",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128744"
+            },
+            "peerRow": {
+              "product": "20723",
+              "description": "STRAWBERRY CHARLOTTE BAG",
+              "invoice": "557233",
+              "date": "2011-06-17T14:44:00",
+              "sourceRow": "Year 2010-2011:231089"
+            }
+          }
+        ]
+      },
+      {
+        "peer": "15615",
+        "jaccard": 0.207143,
+        "sharedProductCount": 58,
+        "sharedProducts": [
+          "20712",
+          "20713",
+          "20723",
+          "20724",
+          "20725",
+          "20726",
+          "20727",
+          "20728",
+          "20973",
+          "20974",
+          "20975",
+          "20977",
+          "20978",
+          "21213",
+          "21929",
+          "21931",
+          "21936",
+          "21937",
+          "22178",
+          "22355",
+          "22356",
+          "22382",
+          "22383",
+          "22384",
+          "22386",
+          "22411",
+          "22457",
+          "22488",
+          "22665",
+          "22666",
+          "22667",
+          "22720",
+          "23197",
+          "23199",
+          "23201",
+          "23203",
+          "23204",
+          "23206",
+          "23207",
+          "23284",
+          "23298",
+          "23300",
+          "23301",
+          "23307",
+          "47566",
+          "47566B",
+          "47591D",
+          "82551",
+          "82552",
+          "84836",
+          "84879",
+          "84946",
+          "84978",
+          "84991",
+          "85099B",
+          "85099C",
+          "85099F",
+          "85123A"
+        ],
+        "evidence": [
+          {
+            "stockCode": "20712",
+            "targetRow": {
+              "product": "20712",
+              "description": "JUMBO BAG WOODLAND ANIMALS",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128742"
+            },
+            "peerRow": {
+              "product": "20712",
+              "description": "JUMBO BAG WOODLAND ANIMALS",
+              "invoice": "556189",
+              "date": "2011-06-09T11:57:00",
+              "sourceRow": "Year 2010-2011:220406"
+            }
+          },
+          {
+            "stockCode": "20713",
+            "targetRow": {
+              "product": "20713",
+              "description": "JUMBO BAG OWLS",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128739"
+            },
+            "peerRow": {
+              "product": "20713",
+              "description": "JUMBO BAG OWLS",
+              "invoice": "547100",
+              "date": "2011-03-21T10:31:00",
+              "sourceRow": "Year 2010-2011:126783"
+            }
+          },
+          {
+            "stockCode": "20723",
+            "targetRow": {
+              "product": "20723",
+              "description": "STRAWBERRY CHARLOTTE BAG",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128744"
+            },
+            "peerRow": {
+              "product": "20723",
+              "description": "STRAWBERRY CHARLOTTE BAG",
+              "invoice": "547100",
+              "date": "2011-03-21T10:31:00",
+              "sourceRow": "Year 2010-2011:126792"
+            }
+          }
+        ]
+      },
+      {
+        "peer": "16745",
+        "jaccard": 0.198444,
+        "sharedProductCount": 51,
+        "sharedProducts": [
+          "20711",
+          "20712",
+          "20723",
+          "20724",
+          "20725",
+          "20726",
+          "20727",
+          "20728",
+          "21061",
+          "21155",
+          "21174",
+          "21212",
+          "21213",
+          "21232",
+          "21929",
+          "21930",
+          "21936",
+          "21975",
+          "22355",
+          "22356",
+          "22383",
+          "22384",
+          "22385",
+          "22386",
+          "22411",
+          "22417",
+          "22666",
+          "22667",
+          "22720",
+          "22722",
+          "22723",
+          "22895",
+          "22897",
+          "22908",
+          "22960",
+          "22993",
+          "23199",
+          "23200",
+          "23203",
+          "23206",
+          "23208",
+          "23236",
+          "23243",
+          "23245",
+          "23307",
+          "23321",
+          "82551",
+          "82552",
+          "82580",
+          "85099B",
+          "85099F"
+        ],
+        "evidence": [
+          {
+            "stockCode": "20711",
+            "targetRow": {
+              "product": "20711",
+              "description": "JUMBO BAG TOYS ",
+              "invoice": "551810",
+              "date": "2011-05-04T11:32:00",
+              "sourceRow": "Year 2010-2011:174320"
+            },
+            "peerRow": {
+              "product": "20711",
+              "description": "JUMBO BAG TOYS ",
+              "invoice": "546220",
+              "date": "2011-03-10T12:16:00",
+              "sourceRow": "Year 2010-2011:116181"
+            }
+          },
+          {
+            "stockCode": "20712",
+            "targetRow": {
+              "product": "20712",
+              "description": "JUMBO BAG WOODLAND ANIMALS",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128742"
+            },
+            "peerRow": {
+              "product": "20712",
+              "description": "JUMBO BAG WOODLAND ANIMALS",
+              "invoice": "549276",
+              "date": "2011-04-07T13:11:00",
+              "sourceRow": "Year 2010-2011:149115"
+            }
+          },
+          {
+            "stockCode": "20723",
+            "targetRow": {
+              "product": "20723",
+              "description": "STRAWBERRY CHARLOTTE BAG",
+              "invoice": "547359",
+              "date": "2011-03-22T12:27:00",
+              "sourceRow": "Year 2010-2011:128744"
+            },
+            "peerRow": {
+              "product": "20723",
+              "description": "STRAWBERRY CHARLOTTE BAG",
+              "invoice": "546220",
+              "date": "2011-03-10T12:16:00",
+              "sourceRow": "Year 2010-2011:116203"
+            }
+          }
+        ]
+      }
+    ],
+    "globalTop3": [
+      {
+        "peer": "15356",
+        "jaccard": 0.21843,
+        "sameCommunity": true
+      },
+      {
+        "peer": "15615",
+        "jaccard": 0.207143,
+        "sameCommunity": true
+      },
+      {
+        "peer": "16745",
+        "jaccard": 0.198444,
+        "sameCommunity": true
+      }
+    ],
+    "limitation": "Observed purchases in one period; not direct evidence of personal preferences."
+  },
+  "checks": {
+    "all_customers_assigned": true,
+    "example_peers_in_same_community": true,
+    "example_evidence_has_source_rows": true,
+    "example_jaccard_matches_sets": true
+  }
+}

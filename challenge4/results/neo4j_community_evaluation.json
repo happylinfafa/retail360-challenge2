@@ -1,0 +1,85 @@
+{
+  "checks": {
+    "neo4j_community_route_works": true,
+    "same_group_as_offline_experiment": true,
+    "top_peer_and_score_match_offline_experiment": true,
+    "multi_hop_product_evidence": true,
+    "source_rows_visible": true,
+    "missing_customer_handled": true,
+    "old_similarity_route_preserved": true,
+    "local_llm_grounded": true
+  },
+  "passed": 8,
+  "total": 8,
+  "question": "Which customers in customer 15719's community bought similar products, and why?",
+  "answer": "Customer 15719 is in exploratory community 17841 (54 sampled customers). Same-community peers: 15356 (64 shared products, Jaccard 0.218); 15615 (58 shared products, Jaccard 0.207); 16745 (51 shared products, Jaccard 0.198). These are observed purchases, not proof of personal preferences.",
+  "facts": {
+    "customer": "15719",
+    "groupId": "17841",
+    "groupSize": 54,
+    "windowStart": "2011-03-05",
+    "windowEndExclusive": "2011-09-01",
+    "peers": [
+      {
+        "peer": "15356",
+        "jaccard": 0.218430034,
+        "sharedProductCount": 64
+      },
+      {
+        "peer": "15615",
+        "jaccard": 0.207142857,
+        "sharedProductCount": 58
+      },
+      {
+        "peer": "16745",
+        "jaccard": 0.19844358,
+        "sharedProductCount": 51
+      }
+    ]
+  },
+  "llm": {
+    "interpretation": "Example shared products in this community are JUMBO BAG OWLS, STRAWBERRY SHOPPER BAG, STRAWBERRY CHARLOTTE BAG.",
+    "limitation": "Community membership depends on the sampled customers, thresholds, and historical window; purchases do not prove preferences.",
+    "selectedEvidenceIndices": [
+      0,
+      1,
+      2
+    ]
+  },
+  "evidence": [
+    {
+      "peer": "15356",
+      "product": "20713",
+      "description": "JUMBO BAG OWLS",
+      "invoiceA": "547359",
+      "rowA": "Year 2010-2011:128739",
+      "fileA": "online_retail_II.xlsx",
+      "invoiceB": "557233",
+      "rowB": "Year 2010-2011:231094",
+      "fileB": "online_retail_II.xlsx"
+    },
+    {
+      "peer": "15356",
+      "product": "20717",
+      "description": "STRAWBERRY SHOPPER BAG",
+      "invoiceA": "547359",
+      "rowA": "Year 2010-2011:128746",
+      "fileA": "online_retail_II.xlsx",
+      "invoiceB": "557233",
+      "rowB": "Year 2010-2011:231091",
+      "fileB": "online_retail_II.xlsx"
+    },
+    {
+      "peer": "15356",
+      "product": "20723",
+      "description": "STRAWBERRY CHARLOTTE BAG",
+      "invoiceA": "547359",
+      "rowA": "Year 2010-2011:128744",
+      "fileA": "online_retail_II.xlsx",
+      "invoiceB": "557233",
+      "rowB": "Year 2010-2011:231089",
+      "fileB": "online_retail_II.xlsx"
+    }
+  ],
+  "limitation": "Exploratory 300-customer sample; no validation of community stability or business value."
+}
