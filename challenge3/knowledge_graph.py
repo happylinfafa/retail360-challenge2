@@ -96,8 +96,8 @@ def main():
             sim=db.run(SIMILARITY,**params).data()
             ev=db.run(EVIDENCE,product='21791').data()
             check('Imported line count',counts['OrderLine'],len(df))
-            check('Five node types',len(counts),5)
-            check('Five relationship types',len(rels),5)
+            check('Original five node types present',{'Customer','Invoice','Product','OrderLine','DataSource'} <= set(counts),True)
+            check('Original five relationship types present',{'PLACED','HAS_LINE','OF_PRODUCT','DERIVED_FROM','RECORDED_IN'} <= set(rels),True)
             check('Every line has source',rels['DERIVED_FROM'],len(df))
             sets=df.groupby('CustomerID').StockCode.apply(set).to_dict()
             a,b=sets['12347'],sets['13085']

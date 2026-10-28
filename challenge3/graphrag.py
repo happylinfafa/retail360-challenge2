@@ -17,6 +17,7 @@ from knowledge_graph import START, END
 OLLAMA = 'http://127.0.0.1:11434'
 MODEL = 'qwen2.5:1.5b'
 WINDOW = {'start': START+'T00:00:00', 'end': END+'T00:00:00'}
+COMMUNITY_RUN = 'uci-retail-ii-20110305-20110901-seed5588'
 
 INVOICE = """
 MATCH (c:Customer {customerId:$customer})-[:PLACED]->(i:Invoice {invoiceId:$invoice})
@@ -48,6 +49,23 @@ WHERE c.customerId IN [$a,$b] AND i.invoiceDate >= localdatetime($start)
   AND i.invoiceDate < localdatetime($end)
 RETURN c.customerId AS customer, collect(DISTINCT p.stockCode) AS products
 """
+COMMUNITY_PEERS = """
+MATCH (c:Customer {customerId:$customer})-[:CH4_MEMBER_OF {runId:$runId}]->(g:Community)
+      <-[:CH4_MEMBER_OF {runId:$runId}]-(peer:Customer)
+MATCH (c)-[sim:CH4_SIMILAR {runId:$runId}]-(peer)
+WHERE peer <> c
+RETURN g.groupId AS groupId,g.size AS groupSize,peer.customerId AS peer,
+       sim.jaccard AS jaccard,sim.sharedProductCount AS sharedProductCount
+ORDER BY jaccard DESC,peer LIMIT 3
+"""
+COMMUNITY_EVIDENCE = """
+MATCH (a:Customer {customerId:$customer})-[x:CH4_BOUGHT {runId:$runId}]->(p:Product)
+      <-[y:CH4_BOUGHT {runId:$runId}]-(b:Customer {customerId:$peer})
+RETURN b.customerId AS peer,p.stockCode AS product,p.description AS description,
+       x.invoiceId AS invoiceA,x.sourceRow AS rowA,x.sourceFile AS fileA,
+       y.invoiceId AS invoiceB,y.sourceRow AS rowB,y.sourceFile AS fileB
+ORDER BY product LIMIT 3
+"""
 
 def credentials(path=None):
     if path:
@@ -59,14 +77,19 @@ def credentials(path=None):
 def route(question):
     q=question.lower()
     customer_ids=re.findall(r'\b\d{5}\b', question)
-    if any(word in q for word in ['similar','similarity','jaccard','相似','相似度']):
+    if any(word in q for word in ['community','communities','peer','peers','社区','社群','同群']):
+        kind='community'
+    elif any(word in q for word in ['similar','similarity','jaccard','相似','相似度']):
         kind='similarity'
     elif any(word in q for word in ['both','shared','common','两位','共同','都买']):
         kind='shared'
     elif any(word in q for word in ['invoice','order','bought','purchase','订单','购买']):
         kind='invoice'
     else:
-        raise ValueError('Ask about an invoice, shared purchases, or customer similarity.')
+        raise ValueError('Ask about an invoice, shared purchases, customer similarity, or a community.')
+    if kind=='community':
+        if not customer_ids: raise ValueError('Provide a five-digit customer ID.')
+        return kind,{'customer':customer_ids[0],'runId':COMMUNITY_RUN}
     if kind in ('shared','similarity'):
         if len(customer_ids)<2: raise ValueError('Provide two five-digit customer IDs.')
         return kind,{'a':customer_ids[0], 'b':customer_ids[1], **WINDOW}
@@ -77,6 +100,17 @@ def route(question):
 
 def retrieve(db,question):
     kind,params=route(question)
+    if kind=='community':
+        peers=db.run(COMMUNITY_PEERS,**params).data()
+        if not peers: return {'kind':kind,'status':'no_evidence','facts':{},'evidence':[]}
+        evidence=[]
+        for peer in peers:
+            evidence.extend(db.run(COMMUNITY_EVIDENCE,**params,peer=peer['peer']).data())
+        facts={'customer':params['customer'],'groupId':peers[0]['groupId'],
+               'groupSize':peers[0]['groupSize'],'windowStart':START,
+               'windowEndExclusive':END,'peers':[{k:p[k] for k in ('peer','jaccard','sharedProductCount')} for p in peers]}
+        return {'kind':kind,'status':'ok' if evidence else 'no_evidence',
+                'facts':facts,'evidence':evidence}
     if kind=='invoice':
         rows=db.run(INVOICE,**params).data()
         if not rows: return {'kind':kind,'status':'no_evidence','facts':{},'evidence':[]}
@@ -114,6 +148,12 @@ def exact_answer(result):
                 f"{f['sharedProducts']} distinct purchased product(s) in the selected historical window. "
                 f"Supporting invoices: {f['customers'][0]}: {', '.join(f['invoicesA'])}; "
                 f"{f['customers'][1]}: {', '.join(f['invoicesB'])}.")
+    if kind=='community':
+        peers='; '.join(f"{p['peer']} ({p['sharedProductCount']} shared products, Jaccard {p['jaccard']:.3f})"
+                        for p in f['peers'])
+        return (f"Customer {f['customer']} is in exploratory community {f['groupId']} "
+                f"({f['groupSize']} sampled customers). Same-community peers: {peers}. "
+                'These are observed purchases, not proof of personal preferences.')
     return (f"Customers {f['customers'][0]} and {f['customers'][1]} bought "
             f"{f['productsA']} and {f['productsB']} distinct products, respectively. "
             f"They share {len(f['sharedProducts'])} product(s) out of {f['unionProducts']} "
@@ -132,7 +172,7 @@ def local_interpretation(question,result):
         'Select relevant product descriptions from the retrieved graph evidence. '
         'Return JSON containing only selectedIndices, an array of zero-based indices. '
         'For an invoice, select up to three representative items. '
-        'For a shared-purchase or similarity question, select the shared product. '
+        'For a shared-purchase, similarity, or community question, select up to three shared products. '
         'Do not invent products or add any prose. Return at least one index.'},
         {'role':'user','content':json.dumps({'task':result['kind'],
             'productDescriptions':descriptions})}]
@@ -154,6 +194,9 @@ def local_interpretation(question,result):
     elif result['kind']=='shared':
         interpretation='Both customers bought '+', '.join(chosen)+' in the selected history.'
         limitation='A shared product does not establish broad customer similarity.'
+    elif result['kind']=='community':
+        interpretation='Example shared products in this community are '+', '.join(chosen)+'.'
+        limitation='Community membership depends on the sampled customers, thresholds, and historical window; purchases do not prove preferences.'
     else:
         overlap='low' if result['facts']['jaccard']<0.05 else 'measurable'
         interpretation=f'The observed product overlap is {overlap}; a shared item is '+', '.join(chosen)+'.'
